@@ -32,7 +32,7 @@ class MqttHandler : IMqttApplicationMessageReceivedHandler
             {
                 switch (moonrakerEvent.Status?.PrintStats?.State)
                 {
-                    case PrintState.Printing:
+                    case "printing":
                         _logger.LogInformation("Starting crowsnest");
                         ControlLinuxService("crowsnest", true);
                         break;
