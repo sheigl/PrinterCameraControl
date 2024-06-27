@@ -9,6 +9,8 @@ using Microsoft.Extensions.Options;
 var builder = Host.CreateDefaultBuilder(args);
 builder
     .ConfigureHostConfiguration(builder => builder
+        .AddCommandLine(args)
+        .AddEnvironmentVariables()
         .AddJsonFile("appsettings.json", false)
         .AddJsonFile("appsettings.secrets.json", false))
     .ConfigureServices(services =>
