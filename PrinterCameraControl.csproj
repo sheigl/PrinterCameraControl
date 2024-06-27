@@ -3,7 +3,10 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <RuntimeIdentifiers>linux-arm64</RuntimeIdentifiers>
+    <PublishSingleFile>true</PublishSingleFile>
     <ImplicitUsings>enable</ImplicitUsings>
+    <SelfContained>true</SelfContained>
     <UserSecretsId>dotnet-PrinterCameraControl-74845bc3-c496-49e2-ac27-db4d43dad775</UserSecretsId>
   </PropertyGroup>
 
