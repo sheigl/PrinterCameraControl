@@ -59,7 +59,7 @@ public class PrintStats
     public string? FileName { get; set; }
     public double? TotalDuration { get; set; }
     [JsonConverter(typeof(StringEnumConverter))]
-    public string? State { get; set; }
+    public PrintState? State { get; set; }
     public double? FilamentUsed { get; set; }
 }
 

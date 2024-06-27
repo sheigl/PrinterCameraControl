@@ -26,13 +26,13 @@ class MqttHandler : IMqttApplicationMessageReceivedHandler
             if (!string.IsNullOrEmpty(_configuration["verbose"]))
                 _logger.LogInformation(payload);
 
-            var moonrakerEvent = JsonConvert.DeserializeObject<MoonrakerEvent>(payload)!;
+            var moonrakerEvent = MoonrakerEvent.FromJson(payload);
 
             if (moonrakerEvent.Status?.PrintStats?.State != null)
             {
                 switch (moonrakerEvent.Status?.PrintStats?.State)
                 {
-                    case "printing":
+                    case PrintState.Printing:
                         _logger.LogInformation("Starting crowsnest");
                         ControlLinuxService("crowsnest", true);
                         break;
