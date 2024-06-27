@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text;
+using Microsoft.Extensions.Options;
 using MQTTnet;
 using MQTTnet.Client.Receiving;
 using Newtonsoft.Json;
@@ -8,10 +9,12 @@ namespace PrinterCameraControl;
 class MqttHandler : IMqttApplicationMessageReceivedHandler
 {
     private readonly ILogger<MqttHandler> _logger;
+    private readonly IConfiguration _configuration;
 
-    public MqttHandler(ILogger<MqttHandler> logger)
+    public MqttHandler(ILogger<MqttHandler> logger, IConfiguration configuration)
     {
         _logger = logger;
+        _configuration = configuration;
     }
 
     public Task HandleApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs eventArgs)
@@ -20,6 +23,9 @@ class MqttHandler : IMqttApplicationMessageReceivedHandler
 
         if (!string.IsNullOrEmpty(payload))
         {
+            if (!string.IsNullOrEmpty(_configuration["verbose"]))
+                _logger.LogInformation(payload);
+
             var moonrakerEvent = JsonConvert.DeserializeObject<MoonrakerEvent>(payload)!;
 
             if (moonrakerEvent.Status?.PrintStats?.State != null)
@@ -35,7 +41,7 @@ class MqttHandler : IMqttApplicationMessageReceivedHandler
                         ControlLinuxService("crowsnest", false);
                         break;
                 }
-            }
+            }            
         }
 
         return Task.CompletedTask;

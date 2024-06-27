@@ -60,6 +60,7 @@ public class PrintStats
     public double? TotalDuration { get; set; }
     [JsonConverter(typeof(StringEnumConverter))]
     public PrintState? State { get; set; }
+    public double? FilamentUsed { get; set; }
 }
 
 public partial class MoonrakerEvent
